@@ -126,8 +126,12 @@ class Solution2
 			int reversed = 0;
             int temp =0;
 			while (x != 0) 
-            {
-                if (isOverflow(reversed, temp % 10)) { return false;}
+            {   
+                // say x = 1234567899 (with in 31 bit- signed int range)
+                // then reversed = 998765432 * 10 +1 to become 9987654321 
+                // will overflow MAX possible signed int value 2147483647
+                
+                if (isOverflow(reversed)) { return false;}
                     
                 temp = x % 10;
 				reversed = reversed * 10 + temp;
@@ -136,11 +140,10 @@ class Solution2
 			return actual_number == reversed;
 		}
     private:
-        bool isOverflow(int q, int r) 
+        bool isOverflow(int q) 
         {
-            static const int max_q = numeric_limits<int>::max() / 10;
-            static const int max_r = numeric_limits<int>::max() % 10;
-            return (q > max_q) || (q == max_q && r > max_r);
+            static const int max_q = numeric_limits<int>::max()/10;
+            return q > max_q;
         }
 };
 
