@@ -36,6 +36,8 @@ def reverse1(x):
         x = x//10
     return result if result <= 0x7fffffff else 0  # Handle overflow.
     
+    # every character of 7fffffff is representing 4 bits in hexadecimal form.
+    
 
 
 ''' CPP my solution:
@@ -95,7 +97,13 @@ def reverse2(x):
     :type x: int
     :rtype: int
     """
-    s = cmp(x, 0)
+    s  =  (x > 0) - (x < 0) 
+    '''
+     works same as python2's cmp(x,0)
+     x=-1:   F    -    T       # returns -1
+     x= 0:   F    -    F       # returns 0, same for T - T
+     x= 1:   T    -    F       # returns 1
+    '''
     r = int(repr(s * x)[::-1])
     return s * r * (r < 2 ** 31)
     
